@@ -1,0 +1,290 @@
+<!doctype html>
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg:#f8f5d7"
+  lang="en-us"
+  dir="ltr"
+><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Secure-Docker-Container 1 : Building a Secure Analysis Environment-Marcus1car Blog</title>
+
+  
+  <meta name="theme-color" />
+
+  <meta name="description" content="Introduction to My Docker Security Project
+As my first independent project ,
+I aim to create a secure, isolated environment for file analysis and execution.
+This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker,
+cybersecurity principles, and practical software development.
+Why this project? In cybersecurity, safely analyzing potentially harmful files is crucial.
+A secure, controlled environment helps professionals examine files without risking their main system.
+This blog series will document my journey, mistakes, lessons, and successes included." />
+  <meta name="author" content="Marcus1car" /><link rel="preload stylesheet" as="style" href="https://marcus1car.github.io/main.min.css" />
+
+  
+  <link rel="preload" as="image" href="https://marcus1car.github.io/theme.png" />
+
+  <link rel="preload" as="image" href="https://c4.wallpaperflare.com/wallpaper/621/966/377/evangelion-neon-genesis-evangelion-ramiel-neon-genesis-evangelion-wallpaper-preview.jpg" />
+
+  <link rel="preload" as="image" href="https://marcus1car.github.io/github.svg" /><link rel="preload" as="image" href="https://marcus1car.github.io/linkedin.svg" />
+
+  <script
+    defer
+    src="https://marcus1car.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+
+  
+  <link
+    rel="icon"
+    href="https://marcus1car.github.io/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://marcus1car.github.io/apple-touch-icon.png"
+  />
+
+  <meta name="generator" content="Hugo 0.146.2">
+  <meta itemprop="name" content="Secure-Docker-Container 1 : Building a Secure Analysis Environment">
+  <meta itemprop="description" content="Introduction to My Docker Security Project As my first independent project , I aim to create a secure, isolated environment for file analysis and execution. This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker, cybersecurity principles, and practical software development.
+Why this project? In cybersecurity, safely analyzing potentially harmful files is crucial. A secure, controlled environment helps professionals examine files without risking their main system. This blog series will document my journey, mistakes, lessons, and successes included.">
+  <meta itemprop="datePublished" content="2025-01-25T16:35:43+01:00">
+  <meta itemprop="dateModified" content="2025-01-25T16:35:43+01:00">
+  <meta itemprop="wordCount" content="361"><meta property="og:url" content="https://marcus1car.github.io/posts/securedockercontainer_1/">
+  <meta property="og:site_name" content="Marcus1car Blog">
+  <meta property="og:title" content="Secure-Docker-Container 1 : Building a Secure Analysis Environment">
+  <meta property="og:description" content="Introduction to My Docker Security Project As my first independent project , I aim to create a secure, isolated environment for file analysis and execution. This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker, cybersecurity principles, and practical software development.
+Why this project? In cybersecurity, safely analyzing potentially harmful files is crucial. A secure, controlled environment helps professionals examine files without risking their main system. This blog series will document my journey, mistakes, lessons, and successes included.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-01-25T16:35:43+01:00">
+    <meta property="article:modified_time" content="2025-01-25T16:35:43+01:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Secure-Docker-Container 1 : Building a Secure Analysis Environment">
+  <meta name="twitter:description" content="Introduction to My Docker Security Project As my first independent project , I aim to create a secure, isolated environment for file analysis and execution. This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker, cybersecurity principles, and practical software development.
+Why this project? In cybersecurity, safely analyzing potentially harmful files is crucial. A secure, controlled environment helps professionals examine files without risking their main system. This blog series will document my journey, mistakes, lessons, and successes included.">
+
+  <link rel="canonical" href="https://marcus1car.github.io/posts/securedockercontainer_1/" />
+</head>
+<body
+    class="bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"
+  ><header
+  class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center"
+>
+  <div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto">
+    <a
+      class="-translate-y-[1px] text-2xl font-medium"
+      href="https://marcus1car.github.io/"
+      >Marcus1car Blog</a
+    >
+    <div
+      class="btn-dark text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#f8f5d7'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"
+  ><nav
+      class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
+    >
+      <a
+        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/Marcus1car"
+        target="_blank"
+        rel="me"
+      >github</a>
+      <a
+        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/marcus-poirot-088278341"
+        target="_blank"
+        rel="me"
+      >linkedin</a>
+    </nav>
+  </div>
+</header>
+<main
+      class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16"
+    ><article>
+  <header class="mb-14">
+    <h1 class="my-0! pb-2.5">Secure-Docker-Container 1 : Building a Secure Analysis Environment</h1><div class="text-xs antialiased opacity-60"><time>Jan 25, 2025</time></div></header>
+
+  <section><h2 id="introduction-to-my-docker-security-project">Introduction to My Docker Security Project</h2>
+<p>As my first independent project ,
+I aim to create a secure, isolated environment for file analysis and execution.
+This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker,
+cybersecurity principles, and practical software development.</p>
+<p><strong>Why this project?</strong> In cybersecurity, safely analyzing potentially harmful files is crucial.
+A secure, controlled environment helps professionals examine files without risking their main system.
+This blog series will document my journey, mistakes, lessons, and successes included.</p>
+<h3 id="project-overview-secure-docker-container-for-file-analysis">Project Overview: Secure Docker Container for File Analysis</h3>
+<h4 id="project-goal">Project Goal</h4>
+<p>Create a portable, Docker-based environment designed specifically for cybersecurity professionals to safely analyze and examine potentially harmful files and executables.
+The core philosophy is simple yet powerful: provide a controlled, isolated space that minimizes risks while maximizing analytical capabilities.</p>
+<h3 id="architectural-components">Architectural Components</h3>
+<h4 id="dockerfile-design">Dockerfile Design</h4>
+<p>The foundation of our project is a carefully crafted Dockerfile that emphasizes security and minimalism:</p>
+<ul>
+<li><strong>Base Image</strong>: Lightweight Ubuntu, ensuring a small attack surface</li>
+<li><strong>Virtual Environment</strong>: Isolated Python workspace</li>
+<li><strong>Minimal Toolset</strong>: Only essential tools installed, reducing potential vulnerabilities</li>
+</ul>
+<h4 id="python-scripts-the-heart-of-the-analysis">Python Scripts: The Heart of the Analysis</h4>
+<ol>
+<li>
+<p><strong>analyze.py</strong></p>
+<ul>
+<li>Primary function: File scanning using Yara rules</li>
+<li>Comprehensive virus and malware detection</li>
+<li>Detailed reporting of findings</li>
+</ul>
+</li>
+<li>
+<p><strong>execute.py</strong></p>
+<ul>
+<li>Safely execute files under strict control</li>
+<li>Comprehensive logging of all activities</li>
+<li>Controlled execution environment</li>
+</ul>
+</li>
+</ol>
+<h3 id="key-safety-features">Key Safety Features</h3>
+<p>Our container is designed with multiple layers of protection:</p>
+<ol>
+<li>
+<p><strong>Unique Execution Context</strong></p>
+<ul>
+<li>Each file gets its own isolated environment</li>
+<li>Prevents cross-contamination between analysis sessions</li>
+</ul>
+</li>
+<li>
+<p><strong>Time-Limited Execution</strong></p>
+<ul>
+<li>Strict time constraints on file execution</li>
+<li>Automatically terminate potentially dangerous processes</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource Constraints</strong></p>
+<ul>
+<li>Limit CPU, memory, and storage usage</li>
+<li>Prevent resource exhaustion attacks</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Isolation</strong></p>
+<ul>
+<li>Restrict network access during file execution</li>
+<li>Prevent potentially malicious files from communicating externally</li>
+</ul>
+</li>
+</ol>
+<h3 id="why-docker">Why Docker?</h3>
+<p>Docker provides the perfect platform for this project by offering:</p>
+<ul>
+<li>Lightweight containerization</li>
+<li>Easy reproducibility</li>
+<li>Strong isolation mechanisms</li>
+<li>Simple deployment and scaling</li>
+</ul>
+<p>If you&rsquo;re new to Docker, think of it as a way to package applications and their dependencies into a standardized, portable unit perfect for secure and repeatable testing environments.</p>
+<h3 id="project-status-and-future-posts">Project Status and Future Posts</h3>
+<p>In upcoming posts, I&rsquo;ll dive deep into:</p>
+<ul>
+<li>Detailed Dockerfile configuration</li>
+<li>Python script implementations</li>
+<li>Security design considerations</li>
+<li>Practical use cases and demonstrations</li>
+</ul>
+</section>
+
+  <nav
+    class="mt-24 flex overflow-hidden rounded-xl bg-black/[3%] text-lg leading-[1.2]! *:flex *:w-1/2 *:items-center *:p-5 *:font-medium *:no-underline dark:bg-white/[8%] [&>*:hover]:bg-black/[2%] dark:[&>*:hover]:bg-white/[3%]"
+  ><a class="ltr:pr-3 rtl:pl-3" href="https://marcus1car.github.io/posts/ansible/"
+      ><span class="ltr:mr-1.5 rtl:ml-1.5">←</span><span>Ansible 101 : What It Is, How It Works, and Why It Matters</span></a
+    ></nav></article></main><footer
+  class="mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"
+>
+  <div class="mr-auto">&copy;2025<a class="link" href="https://marcus1car.github.io/">Marcus1car Blog</a></div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >powered by hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >hugo-paper</a
+  >
+</footer>
+</body>
+</html>

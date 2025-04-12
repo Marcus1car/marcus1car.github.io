@@ -13,7 +13,14 @@
       <link>https://marcus1car.github.io/posts/ansible/</link>
       <pubDate>Sat, 12 Apr 2025 14:45:36 +0200</pubDate>
       <guid>https://marcus1car.github.io/posts/ansible/</guid>
-      <description>&lt;p&gt;I recently started digging more into Infrastructure as Code  (&lt;em&gt;IaC&lt;/em&gt;) tools and &lt;em&gt;Devops&lt;/em&gt; tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.&lt;/p&gt;&#xA;&lt;p&gt;Here we will cover one of the most popular IaC tools out there, &lt;strong&gt;Ansible&lt;/strong&gt;.We will look at how it works, and where it fits in the world of IT automation.&lt;/p&gt;</description>
+      <description>&lt;p&gt;I recently started digging more into Infrastructure as Code  (&lt;em&gt;IaC&lt;/em&gt;) tools and &lt;em&gt;Devops&lt;/em&gt; tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.&lt;/p&gt;&#xA;&lt;p&gt;Here we will cover one of the most popular IaC tools out there, &lt;strong&gt;Ansible&lt;/strong&gt;. We will look at how it works, and where it fits in the world of IT automation.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Secure-Docker-Container 1 : Building a Secure Analysis Environment</title>
+      <link>https://marcus1car.github.io/posts/securedockercontainer_1/</link>
+      <pubDate>Sat, 25 Jan 2025 16:35:43 +0100</pubDate>
+      <guid>https://marcus1car.github.io/posts/securedockercontainer_1/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-my-docker-security-project&#34;&gt;Introduction to My Docker Security Project&lt;/h2&gt;&#xA;&lt;p&gt;As my first independent project ,&#xA;I aim to create a secure, isolated environment for file analysis and execution.&#xA;This series of blog posts will chronicle the development of my Secure Docker Container, offering insights into Docker,&#xA;cybersecurity principles, and practical software development.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Why this project?&lt;/strong&gt; In cybersecurity, safely analyzing potentially harmful files is crucial.&#xA;A secure, controlled environment helps professionals examine files without risking their main system.&#xA;This blog series will document my journey, mistakes, lessons, and successes included.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
