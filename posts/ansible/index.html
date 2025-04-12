@@ -172,24 +172,24 @@ Here we will cover one of the most popular IaC tools out there, Ansible.We will 
     <h1 class="my-0! pb-2.5">Ansible 101 : What It Is, How It Works, and Why It Matters</h1><div class="text-xs antialiased opacity-60"><time>Apr 12, 2025</time></div></header>
 
   <section><p>I recently started digging more into Infrastructure as Code  (<em>IaC</em>) tools and <em>Devops</em> tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.</p>
-<p>Here we will cover one of the most popular IaC tools out there, <code>Ansible</code>.We will look at how it works, and where it fits in the world of IT automation.</p>
-<h4 id="what-is-ansible-">What is Ansible ?</h4>
+<p>Here we will cover one of the most popular IaC tools out there, <strong>Ansible</strong>.We will look at how it works, and where it fits in the world of IT automation.</p>
+<h2 id="what-is-ansible-">What is Ansible ?</h2>
 <p>It&rsquo;s an open-source automation tool used for configuration management, application deployment, and task automation. In short: it helps you manage a bunch of computers or servers from a central place, without needing to log into each one and run commands manually.</p>
 <p>Think of it as scripting, but scalable, cleanly organized, and repeatable.
-Additionaly Ansible is <code>agentless</code>, it connects through <code>SSH</code> meaning it can still communicate with the devices without requiring an application or service to be installed on the managed machines.</p>
-<p><strong>The Basics</strong></p>
+Additionaly Ansible is <strong>agentless</strong>, it connects through <strong>SSH</strong> meaning it can still communicate with the devices without requiring an application or service to be installed on the managed machines.</p>
+<h3 id="the-basics">The Basics</h3>
 <ul>
 <li>
-<p><code>Playbooks</code>  : These are the <code>yml</code>/<code>yaml</code> files that will describe the tasks that Ansible will perform.</p>
+<p><strong>Playbooks</strong>  : These are the <strong>yml/yaml</strong> files that will describe the tasks that Ansible will perform.</p>
 </li>
 <li>
-<p><code>Hosts</code> : This is our inventory of machines that we want to manage. You can group them, give them aliases, and define variables per group.</p>
+<p><strong>Hosts</strong> : This is our inventory of machines that we want to manage. You can group them, give them aliases, and define variables per group.</p>
 </li>
 <li>
-<p><code>Modules</code> : Built-in tools that do specific tasks, like managing users, installing packages, or handling files.</p>
+<p><strong>Modules</strong> : Built-in tools that do specific tasks, like managing users, installing packages, or handling files.</p>
 </li>
 <li>
-<p>Idempotency : Instead from resintalling from scratch every time we update playbooks , Ansible will only check what needs to be changed.</p>
+<p><strong>Idempotency</strong> : Instead from resintalling from scratch every time we update playbooks , Ansible will only check what needs to be changed.</p>
 </li>
 </ul>
 <p>Example snippet of a playbook :</p>
@@ -209,8 +209,8 @@ Additionaly Ansible is <code>agentless</code>, it connects through <code>SSH</co
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span></code></pre></div><p>This playbook checks if <code>NGINX</code> is installed on the <em>webservers</em> group, and if it is not, it will install it using the <code>apt</code> module (for Debian/Ubuntu). Then it ensures that NGINX is running by using the <code>service</code> module that can start/stop/restart services.</p>
-<p>Example of <code>hosts.yml</code> :</p>
+</span></span></code></pre></div><p>This playbook checks if <strong>NGINX</strong> is installed on the <em>webservers</em> group, and if it is not, it will install it using the <strong>apt</strong> module (for Debian/Ubuntu). Then it ensures that NGINX is running by using the <strong>service</strong> module that can start/stop/restart services.</p>
+<p>Example of <strong>hosts.yml</strong> :</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">webservers</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">first.example.com</span>:
@@ -220,27 +220,27 @@ Additionaly Ansible is <code>agentless</code>, it connects through <code>SSH</co
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">one.example.com</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">two.example.com</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">three.example.com</span>:
-</span></span></code></pre></div><p>Here we declare the group <em>webservers</em>, which contains the machines <code>first.example.com</code> and <code>second.example.com</code>. So now everytime we call the <em>webservers</em>, it will take acount of both machines.</p>
-<p><strong>What are the use cases ?</strong>
-Ansible is used pretty much everywhere in IT operations:</p>
+</span></span></code></pre></div><p>Here we declare the group <em>webservers</em>, which contains the machines <strong>first.example.com</strong> and <strong>second.example.com</strong>. So now everytime we call the <em>webservers</em>, it will take acount of both machines.</p>
+<h3 id="what-are-the-use-cases-">What are the use cases ?</h3>
+<p>Ansible is used pretty much everywhere in IT operations:</p>
 <ul>
 <li>
-<p>Server provisioning: Automatically set up new servers with the right software and configurations.</p>
+<p><strong>Server provisioning</strong>: Automatically set up new servers with the right software and configurations.</p>
 </li>
 <li>
-<p>App deployment: Roll out your application across multiple machines with one single command.</p>
+<p><strong>App deployment</strong>: Roll out your application across multiple machines with one single command.</p>
 </li>
 <li>
-<p>CI/CD pipelines: Automate deployment as part of your build/release workflow.</p>
+<p><strong>CI/CD pipelines</strong>: Automate deployment as part of your build/release workflow.</p>
 </li>
 <li>
-<p>Cybersecurity : Automate patching, enforce security baselines, or deploy honeypots and monitoring tools. It&rsquo;s also Security hardening like enforcing firewall rules, disabling unnecessary services, or maintaining system compliance.</p>
+<p><strong>Cybersecurity</strong>: Automate patching, enforce security baselines, or deploy honeypots and monitoring tools. It&rsquo;s also Security hardening like enforcing firewall rules, disabling unnecessary services, or maintaining system compliance.</p>
 </li>
 </ul>
-<h4 id="ressources">Ressources</h4>
-<p>Here are some additional resources for people who want to learn more about this tool:</p>
-<p><a href="https://docs.ansible.com/">Ansible community documentation</a>
-<a href="https://www.redhat.com/en/ansible-collaborative/how-ansible-works">Red Hat Starter Guide</a>
+<h2 id="ressources">Ressources</h2>
+<p>Here are some additional resources for those who want to learn more about this tool :</p>
+<p><a href="https://docs.ansible.com/">Ansible community documentation</a> <br>
+<a href="https://www.redhat.com/en/ansible-collaborative/how-ansible-works">Red Hat Starter Guide</a>   <br>
 <a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">Installing Ansible</a></p>
 </section>
 
