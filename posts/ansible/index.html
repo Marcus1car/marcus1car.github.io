@@ -20,12 +20,13 @@
   />
 
   
-  <title>Ansible 101-Marcus1car Blog</title>
+  <title>Ansible 101 : What It Is, How It Works, and Why It Matters-Marcus1car Blog</title>
 
   
   <meta name="theme-color" />
 
-  <meta name="description" content="" />
+  <meta name="description" content="I recently started digging more into Infrastructure as Code  (IaC) tools and Devops tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.
+Here we will cover one of the most popular IaC tools out there, Ansible.We will look at how it works, and where it fits in the world of IT automation." />
   <meta name="author" content="Marcus1car" /><link rel="preload stylesheet" as="style" href="https://marcus1car.github.io/main.min.css" />
 
   
@@ -52,11 +53,16 @@
   />
 
   <meta name="generator" content="Hugo 0.146.2">
-  <meta itemprop="name" content="Ansible 101">
+  <meta itemprop="name" content="Ansible 101 : What It Is, How It Works, and Why It Matters">
+  <meta itemprop="description" content="I recently started digging more into Infrastructure as Code (IaC) tools and Devops tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.
+Here we will cover one of the most popular IaC tools out there, Ansible.We will look at how it works, and where it fits in the world of IT automation.">
   <meta itemprop="datePublished" content="2025-04-12T14:45:36+02:00">
-  <meta itemprop="dateModified" content="2025-04-12T14:45:36+02:00"><meta property="og:url" content="https://marcus1car.github.io/posts/ansible/">
+  <meta itemprop="dateModified" content="2025-04-12T14:45:36+02:00">
+  <meta itemprop="wordCount" content="492"><meta property="og:url" content="https://marcus1car.github.io/posts/ansible/">
   <meta property="og:site_name" content="Marcus1car Blog">
-  <meta property="og:title" content="Ansible 101">
+  <meta property="og:title" content="Ansible 101 : What It Is, How It Works, and Why It Matters">
+  <meta property="og:description" content="I recently started digging more into Infrastructure as Code (IaC) tools and Devops tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.
+Here we will cover one of the most popular IaC tools out there, Ansible.We will look at how it works, and where it fits in the world of IT automation.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -64,7 +70,9 @@
     <meta property="article:modified_time" content="2025-04-12T14:45:36+02:00">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Ansible 101">
+  <meta name="twitter:title" content="Ansible 101 : What It Is, How It Works, and Why It Matters">
+  <meta name="twitter:description" content="I recently started digging more into Infrastructure as Code (IaC) tools and Devops tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.
+Here we will cover one of the most popular IaC tools out there, Ansible.We will look at how it works, and where it fits in the world of IT automation.">
 
   <link rel="canonical" href="https://marcus1car.github.io/posts/ansible/" />
 </head>
@@ -161,9 +169,80 @@
       class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16"
     ><article>
   <header class="mb-14">
-    <h1 class="my-0! pb-2.5">Ansible 101</h1><div class="text-xs antialiased opacity-60"><time>Apr 12, 2025</time></div></header>
+    <h1 class="my-0! pb-2.5">Ansible 101 : What It Is, How It Works, and Why It Matters</h1><div class="text-xs antialiased opacity-60"><time>Apr 12, 2025</time></div></header>
 
-  <section></section>
+  <section><p>I recently started digging more into Infrastructure as Code  (<em>IaC</em>) tools and <em>Devops</em> tools in general to gain skills and knowledge for my future internship. In this series of articles, I will go over multiple tools and topics. We will mainly cover the basics, concepts, and provide simple examples. If I end up doing a lab with a specific tool, I will publish an article for it.</p>
+<p>Here we will cover one of the most popular IaC tools out there, <code>Ansible</code>.We will look at how it works, and where it fits in the world of IT automation.</p>
+<h4 id="what-is-ansible-">What is Ansible ?</h4>
+<p>It&rsquo;s an open-source automation tool used for configuration management, application deployment, and task automation. In short: it helps you manage a bunch of computers or servers from a central place, without needing to log into each one and run commands manually.</p>
+<p>Think of it as scripting, but scalable, cleanly organized, and repeatable.
+Additionaly Ansible is <code>agentless</code>, it connects through <code>SSH</code> meaning it can still communicate with the devices without requiring an application or service to be installed on the managed machines.</p>
+<p><strong>The Basics</strong></p>
+<ul>
+<li>
+<p><code>Playbooks</code>  : These are the <code>yml</code>/<code>yaml</code> files that will describe the tasks that Ansible will perform.</p>
+</li>
+<li>
+<p><code>Hosts</code> : This is our inventory of machines that we want to manage. You can group them, give them aliases, and define variables per group.</p>
+</li>
+<li>
+<p><code>Modules</code> : Built-in tools that do specific tasks, like managing users, installing packages, or handling files.</p>
+</li>
+<li>
+<p>Idempotency : Instead from resintalling from scratch every time we update playbooks , Ansible will only check what needs to be changed.</p>
+</li>
+</ul>
+<p>Example snippet of a playbook :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install NGINX on Ubuntu</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">webservers</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">ubuntu   </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Ensure NGINX is installed</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">apt</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Ensure nginx is running</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>This playbook checks if <code>NGINX</code> is installed on the <em>webservers</em> group, and if it is not, it will install it using the <code>apt</code> module (for Debian/Ubuntu). Then it ensures that NGINX is running by using the <code>service</code> module that can start/stop/restart services.</p>
+<p>Example of <code>hosts.yml</code> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">webservers</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">first.example.com</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">second.example.com</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">dbservers</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">one.example.com</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">two.example.com</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">three.example.com</span>:
+</span></span></code></pre></div><p>Here we declare the group <em>webservers</em>, which contains the machines <code>first.example.com</code> and <code>second.example.com</code>. So now everytime we call the <em>webservers</em>, it will take acount of both machines.</p>
+<p><strong>What are the use cases ?</strong>
+Ansible is used pretty much everywhere in IT operations:</p>
+<ul>
+<li>
+<p>Server provisioning: Automatically set up new servers with the right software and configurations.</p>
+</li>
+<li>
+<p>App deployment: Roll out your application across multiple machines with one single command.</p>
+</li>
+<li>
+<p>CI/CD pipelines: Automate deployment as part of your build/release workflow.</p>
+</li>
+<li>
+<p>Cybersecurity : Automate patching, enforce security baselines, or deploy honeypots and monitoring tools. It&rsquo;s also Security hardening like enforcing firewall rules, disabling unnecessary services, or maintaining system compliance.</p>
+</li>
+</ul>
+<h4 id="ressources">Ressources</h4>
+<p>Here are some additional resources for people who want to learn more about this tool:</p>
+<p><a href="https://docs.ansible.com/">Ansible community documentation</a>
+<a href="https://www.redhat.com/en/ansible-collaborative/how-ansible-works">Red Hat Starter Guide</a>
+<a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">Installing Ansible</a></p>
+</section>
 
   </article></main><footer
   class="mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"
