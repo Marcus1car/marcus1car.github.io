@@ -1,0 +1,328 @@
+<!doctype html>
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg:#f8f5d7"
+  lang="en-us"
+  dir="ltr"
+><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Kubernetes 101 : What It Is, How It Works, and Why It Matters-Marcus1car Blog</title>
+
+  
+  <meta name="theme-color" />
+
+  <meta name="description" content="In this second installement in my series of articles, I will cover the  container orchestration  tool Kubernetes.
+Since late 2024, I&rsquo;ve been using Docker a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works.
+But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, K8s for short.
+What is Kubernetes ?
+It&rsquo;s an open source container orchestration platform. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more." />
+  <meta name="author" content="Marcus1car" /><link rel="preload stylesheet" as="style" href="https://marcus1car.github.io/main.min.css" />
+
+  
+  <link rel="preload" as="image" href="https://marcus1car.github.io/theme.png" />
+
+  <link rel="preload" as="image" href="https://c4.wallpaperflare.com/wallpaper/621/966/377/evangelion-neon-genesis-evangelion-ramiel-neon-genesis-evangelion-wallpaper-preview.jpg" />
+
+  <link rel="preload" as="image" href="https://marcus1car.github.io/github.svg" /><link rel="preload" as="image" href="https://marcus1car.github.io/linkedin.svg" />
+
+  <script
+    defer
+    src="https://marcus1car.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+
+  
+  <link
+    rel="icon"
+    href="https://marcus1car.github.io/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://marcus1car.github.io/apple-touch-icon.png"
+  />
+
+  <meta name="generator" content="Hugo 0.146.3">
+  <meta itemprop="name" content="Kubernetes 101 : What It Is, How It Works, and Why It Matters">
+  <meta itemprop="description" content="In this second installement in my series of articles, I will cover the container orchestration tool Kubernetes. Since late 2024, I’ve been using Docker a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works. But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, K8s for short.
+What is Kubernetes ? It’s an open source container orchestration platform. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more.">
+  <meta itemprop="datePublished" content="2025-04-14T19:10:11+02:00">
+  <meta itemprop="dateModified" content="2025-04-14T19:10:11+02:00">
+  <meta itemprop="wordCount" content="777"><meta property="og:url" content="https://marcus1car.github.io/posts/k8s_101/">
+  <meta property="og:site_name" content="Marcus1car Blog">
+  <meta property="og:title" content="Kubernetes 101 : What It Is, How It Works, and Why It Matters">
+  <meta property="og:description" content="In this second installement in my series of articles, I will cover the container orchestration tool Kubernetes. Since late 2024, I’ve been using Docker a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works. But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, K8s for short.
+What is Kubernetes ? It’s an open source container orchestration platform. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-04-14T19:10:11+02:00">
+    <meta property="article:modified_time" content="2025-04-14T19:10:11+02:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kubernetes 101 : What It Is, How It Works, and Why It Matters">
+  <meta name="twitter:description" content="In this second installement in my series of articles, I will cover the container orchestration tool Kubernetes. Since late 2024, I’ve been using Docker a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works. But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, K8s for short.
+What is Kubernetes ? It’s an open source container orchestration platform. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more.">
+
+  <link rel="canonical" href="https://marcus1car.github.io/posts/k8s_101/" />
+</head>
+<body
+    class="bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"
+  ><header
+  class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center"
+>
+  <div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto">
+    <a
+      class="-translate-y-[1px] text-2xl font-medium"
+      href="https://marcus1car.github.io/"
+      >Marcus1car Blog</a
+    >
+    <div
+      class="btn-dark text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#f8f5d7'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"
+  ><nav
+      class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
+    >
+      <a
+        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/Marcus1car"
+        target="_blank"
+        rel="me"
+      >github</a>
+      <a
+        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/marcus-poirot-088278341"
+        target="_blank"
+        rel="me"
+      >linkedin</a>
+    </nav>
+  </div>
+</header>
+<main
+      class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16"
+    ><article>
+  <header class="mb-14">
+    <h1 class="my-0! pb-2.5">Kubernetes 101 : What It Is, How It Works, and Why It Matters</h1><div class="text-xs antialiased opacity-60"><time>Apr 14, 2025</time></div></header>
+
+  <section><p>In this second installement in my series of articles, I will cover the  container orchestration  tool <strong>Kubernetes</strong>.
+Since late 2024, I&rsquo;ve been using <strong>Docker</strong> a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works.
+But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, <strong>K8s</strong> for short.</p>
+<h2 id="what-is-kubernetes-">What is Kubernetes ?</h2>
+<p>It&rsquo;s an open source <strong>container orchestration platform</strong>. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more.</p>
+<p><strong>Kubernetes handles all that for you</strong>:</p>
+<ul>
+<li>It balances traffic across your containers. (load balancing)</li>
+<li>It restarts failed ones.</li>
+<li>It helps you update your app without downtime.</li>
+<li>It scales your app up or down depending on demand.</li>
+</ul>
+<hr>
+<h2 id="the-core-concepts">The Core Concepts</h2>
+<h3 id="-the-control-plane-master-node">🔹 The Control Plane (Master Node)</h3>
+<p>This is the brain of the cluster. It runs several components:</p>
+<ul>
+<li><strong>API Server</strong> – Entry point to the cluster. All tools (like <strong>kubectl</strong>) talk to it.</li>
+<li><strong>Scheduler</strong> – Decides which machine runs which container (Pod).</li>
+<li><strong>Controller Manager</strong> – Keeps tracks of everything and makes sure the actual state matches the desired state.</li>
+<li><strong>etcd</strong> – A key-value store that holds the cluster&rsquo;s configuration and state.</li>
+</ul>
+<p>In production, you’ll often have <strong>multiple control plane nodes</strong> for high availability.</p>
+<h3 id="-worker-nodes">🔹 Worker Nodes</h3>
+<p>These are the actual machines (physical or virtual) that run your app. They host:</p>
+<ul>
+<li><strong>Pods</strong> are the smallest unit in K8s. Each Pod usually runs one container (but it can run more).</li>
+<li>Each Pod gets its <strong>own IP address</strong>, but if you delete and recreate a Pod, that IP changes that&rsquo;s why we use <strong>Services</strong>.</li>
+</ul>
+<h3 id="-services">🔹 Services</h3>
+<p>A <strong>Service</strong> is a stable network endpoint. It&rsquo;s an abstraction that sits in front of a group of Pods and routes traffic to them, even if the individual Pods change.</p>
+<p>Example of <strong>services.yml</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ClusterIP</span>
+</span></span></code></pre></div><h3 id="-volumes">🔹 Volumes</h3>
+<p>Pods are temporary. If one dies, it’s replaced, but any data inside it disappears unless it’s stored externally.
+<strong>Volumes</strong> solve this by letting Pods use <strong>persistent storage</strong>, often provided by your cloud provider or external systems. They live outside the Pod lifecycle.</p>
+<h3 id="-ingress">🔹 Ingress</h3>
+<p>When you want users to access your app (via HTTP), you don’t expose Pods or Services directly. Instead, you use <strong>Ingress</strong>. It’s like a smart router that receives incoming traffic and forwards it to the right Service.</p>
+<p>It also supports things like:</p>
+<ul>
+<li>TLS (HTTPS)</li>
+<li>Path-based routing (e.g., <strong>/api</strong> vs <strong>/admin</strong>)</li>
+</ul>
+<h3 id="-configmap--secret">🔹 ConfigMap &amp; Secret</h3>
+<ul>
+<li><strong>ConfigMap</strong> – Store plain-text configurations (e.g., app settings, endpoints, etc.).</li>
+</ul>
+<p>Example of <strong>configmap.yml</strong> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">app-config</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">APP_NAME</span>: <span style="color:#e6db74">&#34;MyApp&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">API_ENDPOINT</span>: <span style="color:#e6db74">&#34;https://api.example.com&#34;</span>
+</span></span></code></pre></div><ul>
+<li><strong>Secret</strong> – Just like ConfigMap, but encrypted, it&rsquo;s mainly used for things like API keys or tokens.</li>
+</ul>
+<p>Example of <strong>secret.yml</strong> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Secret</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">app-secret</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">type</span>: <span style="color:#ae81ff">Opaque</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">DB_PASSWORD</span>: <span style="color:#ae81ff">bWVvdw==  </span>
+</span></span></code></pre></div><p>Secrets are encoded by default (using base64, but better than plain text). In real setups, you&rsquo;d use a third-party tool like HashiCorp Vault or a cloud key management service to handle sensitive data</p>
+<h3 id="-the-virtual-network">🔹 The Virtual Network</h3>
+<p>Kubernetes sets up a cluster-wide virtual network that connects all Pods across all nodes — like they’re on the same local network.</p>
+<ul>
+<li>
+<p>Each Pod gets its own IP address.</p>
+</li>
+<li>
+<p>Pods can talk to each other directly using these IPs, no matter which node they’re on.</p>
+</li>
+<li>
+<p>You don’t need to set up port forwarding or NAT between nodes — Kubernetes handles it.</p>
+</li>
+</ul>
+<p>This network abstraction is what lets Kubernetes treat multiple worker nodes like one big machine. It’s also what allows Services, Ingress, and other components to route traffic reliably without knowing exactly where each container is running.</p>
+<h3 id="-deployments-blueprints">🔹 Deployments (blueprints)</h3>
+<p>A blueprint for your application in Kubernetes that tells the cluster what your app should look like and makes sure it stays that way.</p>
+<p>It defines:</p>
+<ul>
+<li>What image to run</li>
+<li>How many replicas you want</li>
+<li>How to roll out updates</li>
+</ul>
+<p>Example of <strong>deployment.yml</strong> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.25</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><p>This will deploy 3 replicas of an NGINX container :</p>
+<ul>
+<li>Run 3 Pods with the NGINX image</li>
+<li>Expose port 80</li>
+<li>Automatically replace any crashed Pods</li>
+</ul>
+<p>In another installment of this series, I’ll walk through a hands-on test using Minikube.</p>
+</section>
+
+  <nav
+    class="mt-24 flex overflow-hidden rounded-xl bg-black/[3%] text-lg leading-[1.2]! *:flex *:w-1/2 *:items-center *:p-5 *:font-medium *:no-underline dark:bg-white/[8%] [&>*:hover]:bg-black/[2%] dark:[&>*:hover]:bg-white/[3%]"
+  ><a
+      class="justify-end pl-3 ltr:ml-auto rtl:mr-auto"
+      href="https://marcus1car.github.io/posts/ansible/"
+      ><span>Ansible 101 : What It Is, How It Works, and Why It Matters</span><span class="ltr:ml-1.5 rtl:mr-1.5">→</span></a
+    ></nav></article></main><footer
+  class="mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"
+>
+  <div class="mr-auto">&copy;2025<a class="link" href="https://marcus1car.github.io/">Marcus1car Blog</a></div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >powered by hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >hugo-paper</a
+  >
+</footer>
+</body>
+</html>

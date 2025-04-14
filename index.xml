@@ -6,8 +6,15 @@
     <description>Recent content on Marcus1car Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Apr 2025 14:45:36 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 14 Apr 2025 19:10:11 +0200</lastBuildDate>
     <atom:link href="https://marcus1car.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 101 : What It Is, How It Works, and Why It Matters</title>
+      <link>https://marcus1car.github.io/posts/k8s_101/</link>
+      <pubDate>Mon, 14 Apr 2025 19:10:11 +0200</pubDate>
+      <guid>https://marcus1car.github.io/posts/k8s_101/</guid>
+      <description>&lt;p&gt;In this second installement in my series of articles, I will cover the  container orchestration  tool &lt;strong&gt;Kubernetes&lt;/strong&gt;.&#xA;Since late 2024, I&amp;rsquo;ve been using &lt;strong&gt;Docker&lt;/strong&gt; a lot for my projects. It’s been a game changer, no more dependency errors, broken setups, or messy environments. It just works.&#xA;But once I started looking into real-world use cases for Docker, I saw a lot of mentions of Kubernetes, &lt;strong&gt;K8s&lt;/strong&gt; for short.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-kubernetes-&#34;&gt;What is Kubernetes ?&lt;/h2&gt;&#xA;&lt;p&gt;It&amp;rsquo;s an open source &lt;strong&gt;container orchestration platform&lt;/strong&gt;. Which means that using it you can run, manage, and scale containerized apps accross clusters of machines. It’s designed for large-scale applications, where managing containers manually with Docker quickly gets messy. You have to worry about starting/stopping containers, restarting them when they crash, assigning ports, managing storage, keeping track of their health, and more.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Ansible 101 : What It Is, How It Works, and Why It Matters</title>
       <link>https://marcus1car.github.io/posts/ansible/</link>
